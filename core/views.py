@@ -1,10 +1,7 @@
-from django.shortcuts import render, redirect
-from django.core.paginator import Paginator
-from django.views.generic import DetailView, ListView
+from django.shortcuts import render
 from django.urls import reverse
-from django.http import HttpResponseRedirect,HttpResponse
+from django.http import HttpResponseRedirect
 from django.contrib import messages
-from django.conf import settings
 import requests, json
 
 
@@ -18,7 +15,7 @@ def produtos(request):
     descricao = request.GET.get('descricao')
     loja = request.GET.get('loja')
 
-    url_base = 'https://api-compare-dafiti.herokuapp.com/api/produtos/'
+    url_base = 'https://teste-dafitir.herokuapp.com/api/produtos/'
     
     if request.session.get('lista') is None:
         request.session['lista'] = {}
@@ -33,7 +30,6 @@ def produtos(request):
             filtro += f'?&loja={loja}'
         url = f'{url_base}{filtro}'
     else:
-        # url = f'{url_base}?page={page}'
         url = f'{url_base}'
     response = requests.get(url)
     data = response.json()['results']
@@ -137,7 +133,3 @@ def remove(request, id):
         messages.error(request, 'Error ao deletar')
 
     return HttpResponseRedirect(reverse("core:compare"))
-
-  
-     
-
