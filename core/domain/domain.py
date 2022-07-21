@@ -9,7 +9,6 @@ Created on Mon Jul 17 15:13:58 2022
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from time import sleep
-from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 import re
 from decouple import config
 

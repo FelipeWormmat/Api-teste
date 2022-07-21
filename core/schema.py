@@ -1,7 +1,5 @@
-from core.scraping.scraper import Scraping as scraper
+from core.domain.domain import Scraping as scraper
 from core.models import Produto
-
-import re
 
 def scraping():
     all_results = scraper.get_all_products()
