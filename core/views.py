@@ -38,11 +38,11 @@ def produtos(request):
     response = requests.get(url)
     data = response.json()['results']
 
-    url_marcas = 'https://api-compare-dafiti.herokuapp.com/api/produtos/marcas/'
+    url_marcas = 'https://teste-dafitir.herokuapp.com/api/produtos/marcas/'
     response_marcas = requests.get(url_marcas)
     data_marcas = response_marcas.json()
 
-    url_lojas = 'https://api-compare-dafiti.herokuapp.com/api/produtos/lojas/'
+    url_lojas = 'https://teste-dafitir.herokuapp.com/api/produtos/lojas/'
     response_lojas = requests.get(url_lojas)
     data_lojas = response_lojas.json()
 
@@ -57,7 +57,7 @@ def produto_compare(request, id):
 
     session_key = request.session.session_key
 
-    response_prod = requests.get(f"https://api-compare-dafiti.herokuapp.com/api/compare-produtos/?produto_id={data['produto']}&session_key={data['session_key']}")
+    response_prod = requests.get(f"https://teste-dafitir.herokuapp.com/api/compare-produtos/?produto_id={data['produto']}&session_key={data['session_key']}")
 
     if len(response_prod.json()['results']) != 0:
         comparacao_id = response_prod.json()['results'][0]['id']
@@ -75,9 +75,9 @@ def produto_compare(request, id):
             'preco_produto': preco_produto,
             'promocao': promocao
         }
-        response = requests.patch(f"https://api-compare-dafiti.herokuapp.com/compare-produtos/{comparacao_id}/", data=data)
+        response = requests.patch(f"https://teste-dafitir.herokuapp.com/compare-produtos/{comparacao_id}/", data=data)
     else:
-        response = requests.post("https://api-compare-dafiti.herokuapp.com/compare-produtos/",data=data)
+        response = requests.post("https://teste-dafitir.herokuapp.com/compare-produtos/",data=data)
 
     if response.status_code == 201:
         messages.success(request, 'Produto adicionado com sucesso')
@@ -88,22 +88,22 @@ def produto_compare(request, id):
 
 def compare(request):
     session_key = request.session.session_key
-    response = requests.get(f"https://api-compare-dafiti.herokuapp.com/api/compare-produtos?session_key={session_key}")
+    response = requests.get(f"https://teste-dafitir.herokuapp.com/api/compare-produtos?session_key={session_key}")
     data = response.json()
     return render(request, "core/comparacao.html", {"produto_list": data['results']})
 
 def comparacao(request):
     
     session_key = request.session.session_key
-    response = requests.get(f"https://api-compare-dafiti.herokuapp.com/api/comparacao?session_key={session_key}")
+    response = requests.get(f"https://teste-dafitir.herokuapp.com/api/comparacao?session_key={session_key}")
     data = response.json()
     request.session.flush()
     return render(request, "core/result_comparacao.html", {"produto_list": data['results']})
 
 def concorrencia(request):
     
-    response = requests.get(f"https://api-compare-dafiti.herokuapp.com/api/concorrencia-loja/")
-    promocao_response = requests.get(f"https://api-compare-dafiti.herokuapp.com/api/promocao-loja/")
+    response = requests.get(f"https://teste-dafitir.herokuapp.com/api/concorrencia-loja/")
+    promocao_response = requests.get(f"https://teste-dafitir.herokuapp.com/api/promocao-loja/")
     data = response.json()['results']
     data_promo = promocao_response.json()['results']
 
@@ -129,7 +129,7 @@ def remove(request, id):
         'produto': id,
         'session_key': session_key
     }
-    response = requests.delete(f"https://api-compare-dafiti.herokuapp.com/api/compare-produtos/produto/{id}/", data=data)
+    response = requests.delete(f"https://teste-dafitir.herokuapp.com/api/compare-produtos/produto/{id}/", data=data)
 
     if response.status_code == 204:
         messages.success(request, 'Produto deletado com sucesso')
