@@ -14,6 +14,7 @@ from pathlib import Path
 from decouple import config
 import os
 from dj_database_url import parse as dburl
+import django_heroku
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -27,7 +28,7 @@ SECRET_KEY = config("SECRET_KEY", cast=str)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config("DEBUG", default=True, cast=bool)
 
-ALLOWED_HOSTS = ['api-compare-dafiti.herokuapp.com','*']
+ALLOWED_HOSTS = ['teste-dafitir.herokuapp.com','*']
 
 
 # Application definition
@@ -139,4 +140,6 @@ CRONJOBS = [
     ('*/60 * * * *', 'core.cron.scraping')
 ]
 
+# Activate Django-Heroku.
+django_heroku.settings(locals())
 
